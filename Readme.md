@@ -107,7 +107,7 @@ sse_kms_key_id =
 
 [Replication]
 src_path = /home/ec2-user/data
-dst_path = -dataset-2
+dst_path = dataset-2
 ```
 
 ### Step 5 
