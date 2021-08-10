@@ -1,7 +1,7 @@
 [toc]
 
 # SFTP2S3 module introduction
-This module will ingest the on-premises sftp data source into S3 bucket, and then process and catalog the data to  "Database", finally will cross border transfer it. The workflow is automatic.
+This module will ingest the on-premises sftp data source into S3 bucket, and then process and catalog the data to  "Database".
 
 ## Which tools are involed
 - Terraform
@@ -26,9 +26,8 @@ Your sensitive information will be saved into SecretsManager.
 - sftp2s3.tf, main module which integrates all block together.
 - variables.tf, define the variables which you need to provide for this module.
 - sftp2s3-Docker, which includes the ECR images defination.
-- s32s3-Docker, which includes the ECR images defination.
 - Doc, which includes the module configuration doc.
-- conf, which includes the sftp2s3 and s32s3 configuration.
+- conf, which includes the sftp2s3 configuration.
 - code, which includes the lambda function code.
 
 ## How to use this module
@@ -76,7 +75,7 @@ module "sftp2s3" {
 }
 ```
 
-Copy the sftp2s3.conf and s32s3.conf from sftp2s3-tf/conf into your current directory.
+Copy the sftp2s3.conf from sftp2s3-tf/conf into your current directory.
 
 ### Step 4
 The sftp2s3.conf defines the sftp data source and the destination.
@@ -109,39 +108,6 @@ sse_kms_key_id =
 [Replication]
 src_path = /home/ec2-user/data
 dst_path = -dataset-2
-```
-
-The s32s3.conf defines the cross border data transfer.
-```ini
-[src-s3]
-type = s3
-provider = AWS
-env_auth = false
-access_key_id =
-secret_access_key =
-region = cn-north-1
-endpoint = s3.cn-north-1.amazonaws.com.cn
-location_constraint = cn-north-1
-acl = bucket-owner-full-control
-server_side_encryption = aws:kms
-sse_kms_key_id = 
-
-[dst-s3]
-type = s3
-provider = AWS
-env_auth = false
-access_key_id =
-secret_access_key =
-region = cn-north-1
-endpoint = s3.cn-north-1.amazonaws.com.cn
-location_constraint = cn-north-1
-acl = bucket-owner-full-control
-server_side_encryption = aws:kms
-sse_kms_key_id = 
-
-[Replication]
-src_path = -dataset-2
-dst_path = datarep-dst-1
 ```
 
 ### Step 5 
